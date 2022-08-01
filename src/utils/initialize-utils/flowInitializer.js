@@ -6,7 +6,7 @@ export function initVertexFlow(state, flows, flowName) {
     dataFlow.flowName = flowName
     dataFlow.startTime = flows.start_time
     dataFlow.endTime = flows.end_time
-
+    console.log(dataFlow.startTime, dataFlow.endTime)
 
     let vertexesFlow = flows.vertexes_flow
     let vertexes = flows.vertexes

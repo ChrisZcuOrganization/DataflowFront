@@ -41,12 +41,12 @@ export class VertexFlow {
         let leftFlow = new Array(tasksFlows[0][0].length).fill(0)
         let processedFlow = new Array(tasksFlows[0][0].length).fill(0)
 
-        let stepLen = (this.endTime - this.startTime) / flowHeights.length
+        let stepLen = (this.endTime - this.startTime) / (flowHeights.length - 1)
         this.flow.times = new Array(tasksFlows[0][0].length).fill(0)
         for (let i =0; i < this.flow.times.length; i +=1){
             this.flow.times[i] = i * stepLen + this.startTime
         }
-
+        console.log(this.vertexName, this.endTime, this.flow.times.slice(-1)[0])
         let _this = this
         tasksFlows.forEach(f => {
             let taskFlow = new TaskFlow(f,stepLen, _this.startTime)

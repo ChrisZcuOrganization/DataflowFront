@@ -23,8 +23,6 @@
 import {areaGen, curveGen} from "@/utils/util";
 import * as d3 from "d3"
 
-const stack = d3.stack().keys(d3.range(500)).order(d3.stackOrderNone)
-
 export default {
   name: "VertexBytesFlow",
   props: ["flow", "xScale", "yScale"],
@@ -32,7 +30,7 @@ export default {
   },
   data() {
     return {
-      isOverview: true
+      isOverview: false
     }
   },
   computed: {

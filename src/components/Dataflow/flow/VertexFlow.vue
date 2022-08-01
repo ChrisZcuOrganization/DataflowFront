@@ -1,9 +1,9 @@
 <template>
   <g>
-    <g v-if="isTasksFlow">
+    <g v-if="isDetailedFlow">
       <TasksFlow :flows="detailedFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></TasksFlow>
     </g>
-    <g v-if="isTasksFlow" @click="handleVertexClick">
+    <g v-if="!isDetailedFlow" @click="handleVertexClick">
       <VertexBytesFlow :flow="overviewFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></VertexBytesFlow>
     </g>
   </g>
@@ -16,10 +16,9 @@ import VertexBytesFlow from "@/components/Dataflow/flow/VertexBytesFlow";
 export default {
   name: "VertexFlow",
   components: {TasksFlow, VertexBytesFlow},
-  props: ['vertexFlow'],
+  props: ['vertexFlow', 'isDetailedFlow'],
   data() {
     return {
-      isTasksFlow: true
     }
   },
   methods: {
@@ -28,7 +27,6 @@ export default {
     }
   },
   created() {
-    this.handleVertexClick()
   },
   computed: {
     detailedFlow() {

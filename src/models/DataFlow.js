@@ -25,6 +25,7 @@ export class DataFlow {
     }
 
     updateXScale(range) {
+        console.log("dataflow", [this.startTime, this.endTime], range)
         this.xScale.domain([this.startTime, this.endTime]).range(range)
     }
 
@@ -40,7 +41,8 @@ export class DataFlow {
             vertex.updateYScale([_this.yScale(vertex.yOff), _this.yScale(vertex.yOff + vertex.flow.maxHeight)])
         })
     }
-    initCntRelation(){
+
+    initCntRelation() {
         let _this = this
         this.vertexList.forEach(vex => {
             if (_this.cntSrcToDstMap[vex]) {
@@ -54,6 +56,7 @@ export class DataFlow {
             }
         })
     }
+
     initCntFlow() {
         let _this = this
         this.vertexList.forEach(vex => {
