@@ -19,9 +19,10 @@ export default {
   components: {Dataflow},
   mounted() {
     this.$store.commit("dataflow/getTasksFlow", {appName: "Query29"})
-    this.$store.commit("dataflow/getTasksFlow", {appName: "Query29/resource_competition"})
-    this.$store.commit("dataflow/getTasksFlow", {appName: "query54_cold"})
-    this.$store.commit("dataflow/getTasksFlow", {appName: "query54_hot"})
+    // this.$store.commit("dataflow/getTasksFlow", {appName: "Query29/resource_competition"})
+    // this.$store.commit("dataflow/getTasksFlow", {appName: "query54_cold"})
+    // this.$store.commit("dataflow/getTasksFlow", {appName: "query54_hot"})
+    // this.$store.commit("dataflow/getTasksFlow", {appName: "query3"})
   },
   computed: {
     ...mapState('dataflow', {

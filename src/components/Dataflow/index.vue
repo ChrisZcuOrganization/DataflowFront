@@ -10,6 +10,7 @@
         </path>
       </svg>
       <g transform="translate(10,0)">
+        <text y="50">{{dataflow.flowName}}</text>
         <g>
           <g v-for="(cntFlow, id) in connectedFlow" :key="id">
             <ConnectedFlow :flow="cntFlow"></ConnectedFlow>
@@ -52,7 +53,7 @@ export default {
     this.height = this.$el.getBoundingClientRect().height - 10
     this.rectX = this.$el.getBoundingClientRect().x
     this.rectY = this.$el.getBoundingClientRect().y
-    console.log(this.width, this.height)
+    // console.log(this.width, this.height)
     this.$store.commit("dataflow/appLayout", {
       dataflow: this.dataflow,
       x: 0,

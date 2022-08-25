@@ -1,6 +1,6 @@
 <template>
   <g>
-    <g v-if="isDetailedFlow">
+    <g v-if="isDetailedFlow" @click="handleVertexClick">
       <TasksFlow :flows="detailedFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></TasksFlow>
     </g>
     <g v-if="!isDetailedFlow" @click="handleVertexClick">

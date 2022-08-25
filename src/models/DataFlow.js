@@ -25,7 +25,7 @@ export class DataFlow {
     }
 
     updateXScale(range) {
-        console.log("dataflow", [this.startTime, this.endTime], range)
+        // console.log("dataflow", [this.startTime, this.endTime], range)
         this.xScale.domain([this.startTime, this.endTime]).range(range)
     }
 

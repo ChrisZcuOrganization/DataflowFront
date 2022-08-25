@@ -46,7 +46,7 @@ export class VertexFlow {
         for (let i =0; i < this.flow.times.length; i +=1){
             this.flow.times[i] = i * stepLen + this.startTime
         }
-        console.log(this.vertexName, this.endTime, this.flow.times.slice(-1)[0])
+        // console.log(this.vertexName, this.endTime, this.flow.times.slice(-1)[0])
         let _this = this
         tasksFlows.forEach(f => {
             let taskFlow = new TaskFlow(f,stepLen, _this.startTime)
