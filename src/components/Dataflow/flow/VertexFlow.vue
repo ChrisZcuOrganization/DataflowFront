@@ -1,7 +1,7 @@
 <template>
   <g>
     <g v-if="isDetailedFlow" @click="handleVertexClick">
-      <TasksFlow :flows="detailedFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></TasksFlow>
+      <TasksFlow :flows="detailedFlow" :overviewFlow = "overviewFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></TasksFlow>
     </g>
     <g v-if="!isDetailedFlow" @click="handleVertexClick">
       <VertexBytesFlow :flow="overviewFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></VertexBytesFlow>

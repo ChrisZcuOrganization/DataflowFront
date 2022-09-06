@@ -20,6 +20,12 @@ export class Flow {
         this.processedFlow = processedFlow
 
         this.heights = heights
-        this.maxHeight = d3.max(heights)
+
+        let tmpMax = 0
+        for (let id =0; id < leftFlow.length; ++id ){
+            let tmpSum = leftFlow[id] + processedFlow[id]
+            tmpMax = d3.max([tmpSum, tmpMax])
+        }
+        this.maxHeight = d3.max(heights) + tmpMax
     }
 }

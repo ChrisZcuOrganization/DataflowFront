@@ -11,7 +11,7 @@
       </svg>
       <g transform="translate(10,0)">
         <text y="50">{{dataflow.flowName}}</text>
-        <g>
+        <g v-if="false">
           <g v-for="(cntFlow, id) in connectedFlow" :key="id">
             <ConnectedFlow :flow="cntFlow"></ConnectedFlow>
           </g>

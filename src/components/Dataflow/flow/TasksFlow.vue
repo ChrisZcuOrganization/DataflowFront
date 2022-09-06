@@ -4,12 +4,12 @@
       <path :d="model.get('beforeProFlow')" fill="red"
             stroke="rgb(125, 125, 125)"
             stroke-width="0"></path>
-            <path :d="model.get('leftFlow')" fill="green"
-                  stroke="rgb(125, 125, 125)"
-                  stroke-width="0"></path>
-            <path :d="model.get('processedFlow')" fill="blue"
-                  stroke="rgb(125, 125, 125)"
-                  stroke-width="0"></path>
+      <path :d="model.get('leftFlow')" fill="green"
+            stroke="rgb(125, 125, 125)"
+            stroke-width="0"></path>
+      <path :d="model.get('processedFlow')" fill="blue"
+            stroke="rgb(125, 125, 125)"
+            stroke-width="0"></path>
     </g>
     <!--    <g>-->
     <!--      <path :d="testModel" fill="blue"-->
@@ -24,7 +24,7 @@ import {areaGen, curveGen, lineAreaGen} from "@/utils/util"
 
 export default {
   name: "Flow",
-  props: ['flows', 'xScale', 'yScale'],
+  props: ['flows', 'overviewFlow','xScale', 'yScale'],
   data() {
     return {}
   },
@@ -47,9 +47,15 @@ export default {
     pathModels() {
       let models = []
       let timeLength = this.flows[0].flow.times.length
+      // let baseLine = new Array(timeLength).fill(0)
+
+      let maxBeforeHeight = this.overviewFlow.beforeProFlow[0]
       let baseLine = new Array(timeLength).fill(0)
+      for (let idx = 0; idx < timeLength; ++idx) {
+        baseLine[idx] = maxBeforeHeight - this.overviewFlow.beforeProFlow[idx]
+      }
+
       let _this = this
-      console.log("begin tasks model")
       this.flows.forEach(tasksFlow => {
         let mapTmp = new Map()
         let flow = tasksFlow.flow
@@ -208,7 +214,7 @@ export default {
           simpledTimes.push(times[idx])
           simpledFlow.push(flowPoints[idx])
           indexes.push(idx)
-          if (flowPoints[idx] === 0){
+          if (flowPoints[idx] === 0) {
             break
           }
         }

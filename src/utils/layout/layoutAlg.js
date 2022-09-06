@@ -44,9 +44,12 @@ function vexInteract(vex1, vex2) {
             if (vex1.flow.times[vex1VerifyIdx] >= curTime)
                 break
         }
-        if (((vex1.yOff - (vex2.flow.heights[vex2VerifiedIdx] + vex2.yOff)) * (vex1.flow.heights[vex1VerifyIdx] + vex1.yOff - vex2.yOff)) < 0) {
+        // if (((vex1.yOff - (vex2.flow.heights[vex2VerifiedIdx] + vex2.yOff)) * (vex1.flow.heights[vex1VerifyIdx] + vex1.yOff - vex2.yOff)) < 0) {
+        //     return true
+        // }
+        if (((vex1.yOff - (vex2.flow.processedFlow[vex2VerifiedIdx] + vex2.flow.leftFlow[vex2VerifiedIdx] + vex2.flow.beforeProFlow[0] + vex2.yOff))
+            * (vex1.flow.processedFlow[vex2VerifiedIdx] + vex1.flow.leftFlow[vex2VerifiedIdx] + vex1.flow.beforeProFlow[0] + vex1.yOff - vex2.yOff)) < 0)
             return true
-        }
         curTime = vex1.flow.times[vex1VerifyIdx] + 1
     }
     return false
@@ -78,7 +81,7 @@ export function neighborLayout(dataflow, y, height) {
         targetVex.srcVertexesFlow.forEach(flow => {
             if (flow.maxScore > targetVex.leaderVertex.maxScore) {
                 targetVex.leaderVertex = flow
-                targetVex.yOff = flow.yOff + d3.max([maxHeight / 10, flow.maxScore / 3])
+                targetVex.yOff = flow.yOff + flow.flow.beforeProFlow[0] + d3.max([maxHeight / 10, flow.maxScore / 3])
             }
         })
         let interactedVex = verityInteracted(targetVex, finishedVertexList)
