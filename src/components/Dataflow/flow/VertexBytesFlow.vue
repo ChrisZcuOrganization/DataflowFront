@@ -9,12 +9,12 @@
       <path :d="beforeProFlow" fill="red"
             stroke="rgb(125, 125, 125)"
             stroke-width="1"></path>
-      <path :d="leftFlow" fill="green"
-            stroke="rgb(125, 125, 125)"
-            stroke-width="1"></path>
-      <path :d="processedFlow" fill="blue"
-            stroke="rgb(125, 125, 125)"
-            stroke-width="1"></path>
+      <!--      <path :d="leftFlow" fill="green"-->
+      <!--            stroke="rgb(125, 125, 125)"-->
+      <!--            stroke-width="1"></path>-->
+      <!--      <path :d="processedFlow" fill="blue"-->
+      <!--            stroke="rgb(125, 125, 125)"-->
+      <!--            stroke-width="1"></path>-->
     </g>
   </g>
 </template>
@@ -48,14 +48,13 @@ export default {
       return areaGen(points)
     },
     beforeProFlow() {
-      return this.getStackArea(new Array(this.flow.times.length).fill(0), this.flow.beforeProFlow)
-    },
-    leftFlow() {
+      // return this.getStackArea(new Array(this.flow.times.length).fill(0), this.flow.beforeProFlow)
+
+      let maxBeforeHeight = this.flow.beforeProFlow[0]
       let upperFlow = new Array(this.timeLength).fill(0)
-      let bottomFlow = new Array(this.timeLength).fill(0)
-      for (let idx = 0; idx < this.timeLength; idx += 1) {
-        bottomFlow[idx] += (this.flow.beforeProFlow[idx])
-        upperFlow[idx] += (this.flow.beforeProFlow[idx] + this.flow.leftFlow[idx])
+      let bottomFlow = new Array(this.timeLength).fill(maxBeforeHeight)
+      for (let idx = 0; idx < this.timeLength; ++idx) {
+        upperFlow[idx] = maxBeforeHeight - this.flow.beforeProFlow[idx]
       }
       return this.getStackArea(bottomFlow, upperFlow)
     },
@@ -68,7 +67,17 @@ export default {
       }
       console.log(upperFlow[0], upperFlow[100])
       return this.getStackArea(bottomFlow, upperFlow)
-    }
+    },
+    leftFlow() {
+      let upperFlow = new Array(this.timeLength).fill(0)
+      let bottomFlow = new Array(this.timeLength).fill(0)
+      for (let idx = 0; idx < this.timeLength; idx += 1) {
+        bottomFlow[idx] += (this.flow.beforeProFlow[idx])
+        upperFlow[idx] += (this.flow.beforeProFlow[idx] + this.flow.leftFlow[idx])
+      }
+      return this.getStackArea(bottomFlow, upperFlow)
+    },
+
   },
   methods: {
     getStackArea(bottomFlow, upperFlow) {
