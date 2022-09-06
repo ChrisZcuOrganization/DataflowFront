@@ -26,7 +26,7 @@ export function directLayout(dataflow, height) {
         lastYOff = lastYOff + lastYHeight
         lastYHeight = dataflowMap.get(vexTimeTuples[idx].vertex).flow.maxHeight
     }
-    dataflow.updateYScale([0, lastYOff + lastYHeight], [0, height])
+    dataflow.updateYScale([0, Math.log(lastYOff + lastYHeight)], [0, height])
     dataflow.updateVertexScale()
     dataflow.initCntFlow()
 }

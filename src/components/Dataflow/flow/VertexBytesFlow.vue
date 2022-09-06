@@ -66,6 +66,7 @@ export default {
         bottomFlow[idx] += (this.flow.beforeProFlow[idx] + this.flow.leftFlow[idx])
         upperFlow[idx] += (this.flow.beforeProFlow[idx] + this.flow.leftFlow[idx] + this.flow.processedFlow[idx])
       }
+      console.log(upperFlow[0], upperFlow[100])
       return this.getStackArea(bottomFlow, upperFlow)
     }
   },
