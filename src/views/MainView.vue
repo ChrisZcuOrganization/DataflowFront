@@ -1,11 +1,16 @@
 <template>
   <el-row style="height: 100%; width: 100%;" :gutter="8">
     <el-col :span="24" style="height: 100%; overflow-y: scroll;">
-      <div v-for="dataflow in flows" :key="flows.flowName" class="borderedRect"
-           style="margin-top: 2px; margin-left: 2px;">
-        <Dataflow style="width: 100%; height: 300px; margin-top: 2px; margin-left: 2px;"
-                  :dataflow="dataflow"/>
-      </div>
+      <el-row style="height: 40px; width: 100%">
+        control TODO
+      </el-row>
+      <el-row>
+        <div v-for="dataflow in flows" :key="flows.flowName" class="borderedRect"
+             style="margin-top: 2px; margin-left: 2px;">
+          <Dataflow style="width: 100%; height: 300px; margin-top: 2px; margin-left: 2px;"
+                    :dataflow="dataflow"/>
+        </div>
+      </el-row>
     </el-col>
   </el-row>
 </template>

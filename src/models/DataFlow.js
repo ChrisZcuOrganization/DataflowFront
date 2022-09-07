@@ -1,7 +1,10 @@
 import * as d3 from "d3";
+import {Flow} from "@/models/Flow";
 
 export class DataFlow {
     flowName
+
+    flow
 
     vertexFlowMap = new Map
     vertexFlowList = []
@@ -22,6 +25,16 @@ export class DataFlow {
     constructor() {
         this.xScale = d3.scaleLinear()
         this.yScale = d3.scaleLinear()
+        this.flow = new Flow()
+    }
+
+    initFlow(heights, beforeFlow, leftFlow, processedFlow) {
+        this.flow.initFlow(heights, beforeFlow, leftFlow, processedFlow)
+        let stepLen = (this.endTime - this.startTime) / (beforeFlow.length - 1)
+        this.flow.times = new Array(beforeFlow.length).fill(0)
+        for (let i = 0; i < this.flow.times.length; i += 1) {
+            this.flow.times[i] = i * stepLen + this.startTime
+        }
     }
 
     updateXScale(range) {
