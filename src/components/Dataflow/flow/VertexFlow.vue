@@ -1,10 +1,14 @@
 <template>
   <g>
     <g v-if="isDetailedFlow" @click="handleVertexClick">
-      <TasksFlow :flows="detailedFlow" :overviewFlow = "overviewFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></TasksFlow>
+      <TasksFlow :flows="detailedFlow" :overviewFlow="overviewFlow" :xScale="vertexFlow.xScale"
+                 :yScale="vertexFlow.yScale"></TasksFlow>
     </g>
     <g v-if="!isDetailedFlow" @click="handleVertexClick">
-      <VertexBytesFlow :flow="overviewFlow" :xScale="vertexFlow.xScale" :yScale="vertexFlow.yScale"></VertexBytesFlow>
+      <VertexBytesFlow :flow="overviewFlow"
+                       :xScale="vertexFlow.xScale"
+                       :yScale="vertexFlow.yScale"
+                       :isOverview="isOverview"></VertexBytesFlow>
     </g>
   </g>
 </template>
@@ -19,10 +23,12 @@ export default {
   props: ['vertexFlow', 'isDetailedFlow'],
   data() {
     return {
+      isOverview: false
     }
   },
   methods: {
     handleVertexClick() {
+      this.isOverview = !this.isOverview
       console.log(this.vertexFlow.vertexName)
     }
   },

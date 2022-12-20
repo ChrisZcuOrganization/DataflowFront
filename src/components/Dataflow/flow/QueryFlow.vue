@@ -1,13 +1,13 @@
 <template>
   <g>
-    <path :d="beforeProFlow" fill="red"
-          stroke="rgb(125, 125, 125)"
+    <path :d="beforeProFlow" fill="rgb(252,78,42)"
+          stroke="none"
           stroke-width="1"></path>
-    <path :d="processedFlow" fill="blue"
-          stroke="rgb(125, 125, 125)"
+    <path :d="processedFlow" fill="rgb(34,94,168)"
+          stroke="none"
           stroke-width="1"></path>
-    <path :d="leftFlow" fill="green"
-          stroke="rgb(125, 125, 125)"
+    <path :d="leftFlow" fill="rgb(141,211,199)"
+          stroke="none"
           stroke-width="1"></path>
   </g>
 </template>

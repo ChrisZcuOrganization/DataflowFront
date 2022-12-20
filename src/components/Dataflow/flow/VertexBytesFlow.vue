@@ -2,18 +2,18 @@
   <g>
     <g v-if="isOverview">
       <path :d="pathModels" fill="none"
-            stroke="rgb(125, 125, 125)"
-            stroke-width="2"></path>
+            stroke="rgb(254,178,76)"
+            stroke-width="10"></path>
     </g>
-    <g v-if="!isOverview" id="stepDrawCanvas">
-      <path :d="beforeProFlow" fill="red"
-            stroke="rgb(125, 125, 125)"
+    <g id="stepDrawCanvas">
+      <path :d="beforeProFlow" fill="rgb(252,78,42)"
+            stroke="none"
             stroke-width="1"></path>
-      <path :d="processedFlow" fill="blue"
-            stroke="rgb(125, 125, 125)"
+      <path :d="processedFlow" fill="rgb(34,94,168)"
+            stroke="none"
             stroke-width="1"></path>
-      <path :d="leftFlow" fill="green"
-            stroke="rgb(125, 125, 125)"
+      <path :d="leftFlow" fill="rgb(141,211,199)"
+            stroke="none"
             stroke-width="1"></path>
     </g>
   </g>
@@ -25,12 +25,11 @@ import * as d3 from "d3"
 
 export default {
   name: "VertexBytesFlow",
-  props: ["flow", "xScale", "yScale"],
+  props: ["flow", "xScale", "yScale", "isOverview"],
   created() {
   },
   data() {
     return {
-      isOverview: false
     }
   },
   computed: {
@@ -39,10 +38,13 @@ export default {
     },
     pathModels() {
       let points = []
+      let maxBeforeHeight = this.flow.beforeProFlow[0]
       for (let idx = 0; idx < this.flow.times.length; idx += 1) {
         let xTmp = this.xScale(this.flow.times[idx])
-        let yTmp0 = this.yScale(0)
-        let yTmp1 = this.yScale(this.flow.heights[idx])
+        // let yTmp0 = this.yScale(0)
+        let yTmp0 = this.yScale(maxBeforeHeight - this.flow.beforeProFlow[idx])
+        // let yTmp1 = this.yScale(this.flow.heights[idx])
+        let yTmp1 = this.yScale(maxBeforeHeight + this.flow.processedFlow[idx] + this.flow.leftFlow[idx])
         points.push([xTmp, yTmp0, yTmp1])
       }
       return areaGen(points)
@@ -78,8 +80,8 @@ export default {
       }
       return this.getStackArea(bottomFlow, upperFlow)
     },
-
-
+  },
+  watch: {
   },
   methods: {
     getStackArea(bottomFlow, upperFlow) {
