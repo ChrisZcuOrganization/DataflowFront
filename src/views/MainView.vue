@@ -1,46 +1,50 @@
 <template>
   <el-row style="height: 100%; width: 100%;" :gutter="8">
     <el-col :span="24" style="height: 100%; width: 100%; overflow-y: scroll;">
-      <el-row style="height: 40px; width: 100%">
-        Query information: execution time, allocated container (number, memory, cpu core) (only highlight difference for comparison)
+      <el-row style="height: 50px; width: 100%">
+        Query information: execution time, allocated container (number, memory, cpu core) (only highlight difference for
+        comparison)
       </el-row>
-      <div v-for="dataflow in flows" :key="flows.flowName">
-        <el-col style="height: 100%; width: 50%;">
-          <el-row>
-            <div class="borderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
-              <div style="height: 200px;">
-                TDAG, cite from GHive demo, used without details about layout
+      <div v-if="tasksFlowInitDone">
+        <div v-for="dataflow in flows" :key="flows.flowName">
+          <el-col style="height: 100%; width: 40%;">
+            <el-row>
+              <div class="borderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
+                <div style="height: 300px;">
+                  TDAG, cite from GHive demo, used without details about layout
+                </div>
+              </div>
+            </el-row>
+            <el-row>
+              <div class="borderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
+                <div class="borderedRect"
+                     style="width: calc(100% - 8px); margin-top: 2px; margin-left: 2px;margin-right: 2px;">
+                  <Dataflow style="width: 100%; height: 180px; margin-top: 2px; margin-left: 2px;"
+                            :dataflow="dataflow"
+                            :isQueryFlow="true"
+                            :height="420"/>
+                </div>
+                <div class="borderedRect" style="width: calc(100% - 8px); margin: 2px;">
+                  <Dataflow style="width: 100%; height: 365px; margin-top: 2px; margin-left: 2px;"
+                            :dataflow="dataflow"
+                            :isQueryFlow="false"
+                            :height="410"/>
+                </div>
+              </div>
+            </el-row>
+          </el-col>
+          <el-col style="height: 100%; width: 60%;">
+            <div class="borderedRect" style="height: 100%; width: calc(100% - 8px); margin: 2px;">
+              <div class="borderedRect" style="height: 600px; width: calc(100% - 8px); margin: 2px;">
+                <TasksDetails style="width: 100%; height: 100%; margin: 2px"
+                              :dataflow="dataflow"></TasksDetails>
+              </div>
+              <div class="borderedRect" style="height: 255px; width: calc(100% - 8px); margin: 2px;">
+                Tasks counter distribution
               </div>
             </div>
-          </el-row>
-          <el-row>
-            <div class="borderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
-              <div class="borderedRect"
-                   style="width: calc(100% - 8px); margin-top: 2px; margin-left: 2px;margin-right: 2px;">
-                <Dataflow style="width: 100%; height: 130px; margin-top: 2px; margin-left: 2px;"
-                          :dataflow="dataflow"
-                          :isQueryFlow="true"
-                          :height="300"/>
-              </div>
-              <div class="borderedRect" style="width: calc(100% - 8px); margin: 2px;">
-                <Dataflow style="width: 100%; height: 300px; margin-top: 2px; margin-left: 2px;"
-                          :dataflow="dataflow"
-                          :isQueryFlow="false"
-                          :height="300"/>
-              </div>
-            </div>
-          </el-row>
-        </el-col>
-        <el-col style="height: 100%; width: 50%;">
-          <div class="borderedRect" style="height: 100%; width: calc(100% - 8px); margin: 2px;">
-            <div class="borderedRect" style="height: 340px; width: calc(100% - 8px); margin: 2px;">
-              Tasks speed details
-            </div>
-            <div class="borderedRect" style="height: 300px; width: calc(100% - 8px); margin: 2px;">
-              Tasks counter distribution
-            </div>
-          </div>
-        </el-col>
+          </el-col>
+        </div>
       </div>
     </el-col>
   </el-row>
@@ -49,10 +53,11 @@
 <script>
 import Dataflow from "@/components/Dataflow"
 import {mapState} from "vuex";
+import TasksDetails from "@/components/TasksDetails";
 
 export default {
   name: "MainView",
-  components: {Dataflow},
+  components: {TasksDetails, Dataflow},
   mounted() {
 
     this.$store.commit("dataflow/getTasksFlow", {appName: "query29"})
@@ -64,13 +69,14 @@ export default {
   computed: {
     ...mapState('dataflow', {
       flowMap: state => state.flowMap,
-      flows: state => state.flows
+      flows: state => state.flows,
+      tasksFlowInitDone: state => state.tasksFlowInitDone
     }),
   }
 }
 </script>
 
-<style scoped>
+<style>
 .borderedRect {
   border: 2px solid rgba(128, 128, 128, 0.9);
 }

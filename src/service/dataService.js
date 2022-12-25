@@ -39,8 +39,17 @@ function getTasksFlow(param, callback) {
             console.log("error from getTaskFlow request", errResponse)
         })
 }
-
+function getMapTasksDetails(param, callback){
+    const url = `${dataServerUrl}/api/tasks_details/`;
+    axios.post(url, param)
+        .then(resp => {
+            callback(resp.data)
+        }, errResp=>{
+            console.log("error from getMapTasksDetails request", errResp)
+        })
+}
 export default {
     getTestFlow,
-    getTasksFlow
+    getTasksFlow,
+    getMapTasksDetails
 }

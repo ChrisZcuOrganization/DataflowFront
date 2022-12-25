@@ -20,15 +20,19 @@ import VertexBytesFlow from "@/components/Dataflow/flow/VertexBytesFlow";
 export default {
   name: "VertexFlow",
   components: {TasksFlow, VertexBytesFlow},
-  props: ['vertexFlow', 'isDetailedFlow'],
+  props: ['vertexFlow', 'isDetailedFlow', 'dataflow'],
   data() {
     return {
-      isOverview: false
+      // isOverview: false
     }
   },
   methods: {
     handleVertexClick() {
-      this.isOverview = !this.isOverview
+      // this.isOverview = !this.isOverview
+      if (this.dataflow.selectedVertex === this.vertexFlow.vertexName)
+        this.dataflow.selectedVertex = ""
+      else
+        this.dataflow.selectedVertex = this.vertexFlow.vertexName
       console.log(this.vertexFlow.vertexName)
     }
   },
@@ -46,6 +50,9 @@ export default {
     },
     yOff() {
       return this.vertexFlow.yOff
+    },
+    isOverview() {
+      return this.dataflow.selectedVertex === this.vertexFlow.vertexName
     }
   },
 }

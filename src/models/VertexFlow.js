@@ -17,6 +17,7 @@ export class VertexFlow {
     yScale
 
     taskFlows = []
+    // tasksDetails = []
 
     /**MBR layout*/
     MBR

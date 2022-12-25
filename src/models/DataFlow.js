@@ -10,6 +10,10 @@ export class DataFlow {
     vertexFlowList = []
     vertexList
 
+    selectedVertex = ""
+
+    containerTasks = new Map
+
     connectedFlows = []//[(srcX,srcY1,srcY2), (dstX,dstY1,dstY2)]
     cntSrcToDstMap = new Map
 

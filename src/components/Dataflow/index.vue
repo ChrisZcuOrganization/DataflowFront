@@ -35,6 +35,7 @@
               <g v-for="(vertexFlow, idx) in vertexesFlow" :key="idx">
                 <VertexFlow :vertexFlow="vertexFlow"
                             :isDetailedFlow="isDetailedFlow"
+                            :dataflow = "dataflow"
                 ></VertexFlow>
               </g>
             </g>
