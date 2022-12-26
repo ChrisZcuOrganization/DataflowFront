@@ -4,5 +4,4 @@ export function initTasksDetails(dataFlow, containerTasks){
     //     dataFlow.vertexFlowMap.get(vertex).tasksDetails = mapTasks[vertex]
     // })
     dataFlow.containerTasks = containerTasks
-    console.log(dataFlow)
 }

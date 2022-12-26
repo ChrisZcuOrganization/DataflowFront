@@ -24,7 +24,7 @@
 <!--              p-id="2344" :fill="isDetailedFlow ? '#1296db' : '#2c2c2c'">-->
 <!--          </path>-->
 <!--        </svg>-->
-        <svg v-if="tasksLayoutDone" class="vertexFlowClass" style="width: 100%; height: 100%">
+        <svg v-if="tasksLayoutDone" class="vertexFlowClass" style="width: 100%; height: 100%;overflow-x: scroll">
           <g transform="translate(10,10)">
             <g v-if="false">
               <g v-for="(cntFlow, id) in connectedFlow" :key="id">

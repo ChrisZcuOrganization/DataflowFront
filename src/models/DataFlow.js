@@ -17,6 +17,8 @@ export class DataFlow {
     connectedFlows = []//[(srcX,srcY1,srcY2), (dstX,dstY1,dstY2)]
     cntSrcToDstMap = new Map
 
+    edges = [] //(srcVex, dstVex)
+
     startTime
     endTime
 

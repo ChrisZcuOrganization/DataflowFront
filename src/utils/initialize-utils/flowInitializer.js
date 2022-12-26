@@ -19,7 +19,13 @@ export function initVertexFlow(state, flows, flowName) {
         let flow = vertexesFlow[vName]
         vertex.vertexName = vName
         vertex.startTime = flow["start_time"]
+        vertex.totalStartTime = flow["total_start_time"]
+
         vertex.endTime = flow["end_time"]
+        vertex.totalEndTime = flow["total_end_time"]
+
+        vertex.srcDataDis = flow["src_data_dis"]
+        vertex.calDataDis = flow["cal_data_dis"]
 
         vertex.initTasksFlow(flow["start_time"], flow["end_time"], flow["tasks_flow"])
 

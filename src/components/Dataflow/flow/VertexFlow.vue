@@ -4,11 +4,18 @@
       <TasksFlow :flows="detailedFlow" :overviewFlow="overviewFlow" :xScale="vertexFlow.xScale"
                  :yScale="vertexFlow.yScale"></TasksFlow>
     </g>
-    <g v-if="!isDetailedFlow" @click="handleVertexClick">
+    <g v-if="!isDetailedFlow" @click="handleVertexClick($event)">
       <VertexBytesFlow :flow="overviewFlow"
                        :xScale="vertexFlow.xScale"
                        :yScale="vertexFlow.yScale"
                        :isOverview="isOverview"></VertexBytesFlow>
+    </g>
+    <g>
+      <dataflowInfo :flow="overviewFlow"
+                    :vertexFlow="vertexFlow"
+                    :xScale="vertexFlow.xScale"
+                    :yScale="vertexFlow.yScale"
+                    ></dataflowInfo>
     </g>
   </g>
 </template>
@@ -16,24 +23,23 @@
 <script>
 import TasksFlow from "@/components/Dataflow/flow/TasksFlow";
 import VertexBytesFlow from "@/components/Dataflow/flow/VertexBytesFlow";
+import DataflowInfo from "@/components/Dataflow/flow/dataflowInfo";
 
 export default {
   name: "VertexFlow",
-  components: {TasksFlow, VertexBytesFlow},
+  components: {DataflowInfo, TasksFlow, VertexBytesFlow},
   props: ['vertexFlow', 'isDetailedFlow', 'dataflow'],
   data() {
     return {
-      // isOverview: false
     }
   },
   methods: {
-    handleVertexClick() {
-      // this.isOverview = !this.isOverview
+    handleVertexClick(e) {
       if (this.dataflow.selectedVertex === this.vertexFlow.vertexName)
         this.dataflow.selectedVertex = ""
       else
         this.dataflow.selectedVertex = this.vertexFlow.vertexName
-      console.log(this.vertexFlow.vertexName)
+      this.vertexFlow.isShowDataInfo = !this.vertexFlow.isShowDataInfo
     }
   },
   created() {

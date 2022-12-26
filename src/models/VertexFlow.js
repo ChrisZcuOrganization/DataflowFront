@@ -1,6 +1,5 @@
 import {TaskFlow} from "@/models/TaskFlow";
 import {Flow} from "@/models/Flow";
-import {MBR} from "@/models/MBR";
 import * as d3 from "d3";
 
 export class VertexFlow {
@@ -8,10 +7,21 @@ export class VertexFlow {
     startTime
     endTime
 
+    totalStartTime
+    totalEndTime
+
     /**The exact flow unit*/
     flow
     xOff
     yOff
+
+    TDAGYOff
+
+    isShowDataInfo = false
+    isShowOprInfo = false
+
+    srcDataDis
+    calDataDis
 
     xScale
     yScale

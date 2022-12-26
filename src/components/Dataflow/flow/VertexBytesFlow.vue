@@ -1,21 +1,25 @@
 <template>
-  <g>
-    <g v-if="isOverview">
+  <g @click="handleClick($event)">
+    <g v-if="isOverview" style="z-index: 100">
       <path :d="pathModels" fill="none"
             stroke="rgb(254,178,76)"
             stroke-width="10"></path>
     </g>
-    <g id="stepDrawCanvas">
+    <g id="stepDrawCanvas" style="z-index: 100">
       <path :d="beforeProFlow" fill="rgb(252,78,42)"
-            stroke="none"
+            stroke="rgb(252,78,42)"
             stroke-width="1"></path>
       <path :d="processedFlow" fill="rgb(34,94,168)"
-            stroke="none"
+            stroke="rgb(34,94,168)"
             stroke-width="1"></path>
       <path :d="leftFlow" fill="rgb(141,211,199)"
-            stroke="none"
+            stroke="rgb(141,211,199)"
             stroke-width="1"></path>
     </g>
+<!--    <g v-if="isShowInfo" :transform="'translate(' +infoRect+')'" style="z-index: -1">-->
+<!--      <rect width="100" height="100" fill="black"></rect>-->
+<!--    </g>-->
+    <!--    <g id="infoCanvas"></g>-->
   </g>
 </template>
 
@@ -30,9 +34,25 @@ export default {
   },
   data() {
     return {
+      infoX: -1,
+      infoY: -1,
+      isShowInfo: false
     }
   },
+  mounted() {
+    // let canvas = d3.select("#infoCanvas")
+    // canvas.append("rect")
+    //     .attr('x', this.infoX)
+    //     .attr('y', this.infoY)
+    //     .attr('height', 50)
+    //     .attr("width", 50)
+    //     .attr("fill", "black")
+  },
   computed: {
+    infoRect() {
+      let maxBeforeHeight = this.flow.beforeProFlow[0]
+      return [this.xScale(this.flow.times[(this.flow.times.length - 1) / 10]), this.yScale(maxBeforeHeight - maxBeforeHeight / 3)]
+    },
     timeLength() {
       return this.flow.times.length
     },
@@ -82,8 +102,38 @@ export default {
     },
   },
   watch: {
+    // infoX: {
+    //   handler() {
+    //     this.showInfo()
+    //   },
+    //   deep: true
+    // }
   },
   methods: {
+    handleClick(e) {
+      this.isShowInfo = !this.isShowInfo
+      // this.infoX = e.x
+      // this.infoY = e.y
+      // this.showInfo()
+    },
+    showInfo() {
+      let canvas = d3.select("#infoCanvas")
+      canvas.selectAll('rect').remove()
+      // canvas.append("rect")  //添加一个矩形
+      //     .attr("x",78)
+      //     .attr("y",109)
+      //     .attr("width",50)
+      //     .attr("height",50)
+      //     .attr("fill","red")
+      console.log(this.infoX, this.infoY)
+      canvas.append("rect")
+          .attr('x', this.infoX)
+          .attr('y', this.infoY)
+          .attr('height', 100)
+          .attr("width", 100)
+          .attr("fill", "black")
+          .style("z-index", 999)
+    },
     getStackArea(bottomFlow, upperFlow) {
       let points = []
       for (let idx = 0; idx < this.flow.times.length; idx += 1) {

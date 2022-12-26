@@ -10,8 +10,11 @@
           <el-col style="height: 100%; width: 40%;">
             <el-row>
               <div class="borderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
-                <div style="height: 300px;">
-                  TDAG, cite from GHive demo, used without details about layout
+                <div style="height: 300px; margin: 2px;">
+                  <TDAG style="margin-top: 10px"
+                        :dataflow="dataflow"
+                        :height="20"
+                        :marginTop="15"></TDAG>
                 </div>
               </div>
             </el-row>
@@ -52,12 +55,14 @@
 
 <script>
 import Dataflow from "@/components/Dataflow"
+import TDAG from "@/components/TDAG"
+
 import {mapState} from "vuex";
 import TasksDetails from "@/components/TasksDetails";
 
 export default {
   name: "MainView",
-  components: {TasksDetails, Dataflow},
+  components: {TasksDetails, Dataflow, TDAG},
   mounted() {
 
     this.$store.commit("dataflow/getTasksFlow", {appName: "query29"})
