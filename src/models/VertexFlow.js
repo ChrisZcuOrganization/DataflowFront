@@ -12,6 +12,8 @@ export class VertexFlow {
 
     /**The exact flow unit*/
     flow
+    flowRenderDone = false
+
     xOff
     yOff
 

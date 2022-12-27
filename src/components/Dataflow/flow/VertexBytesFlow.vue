@@ -29,7 +29,7 @@ import * as d3 from "d3"
 
 export default {
   name: "VertexBytesFlow",
-  props: ["flow", "xScale", "yScale", "isOverview"],
+  props: ["flow", "xScale", "yScale", "isOverview","vertexFlow","dataflow"],
   created() {
   },
   data() {
@@ -47,6 +47,8 @@ export default {
     //     .attr('height', 50)
     //     .attr("width", 50)
     //     .attr("fill", "black")
+    // this.vertexFlow.flowRenderDone = true
+    // this.$store.commit("dataflow/updateFlowRender", {dataflow: this.dataflow})
   },
   computed: {
     infoRect() {

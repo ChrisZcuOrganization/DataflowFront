@@ -7,11 +7,22 @@ const state = () => ({
     flows: [],
     flowMap: new Map(),
     tasksFlowInitDone: false,
-    tasksLayoutDone: false
+    tasksLayoutDone: false,
+    allFlowRenderDone: false
 })
 const actions = {}
 
 const mutations = {
+    updateFlowRender(state, {dataflow:dataflow}){
+        for(let vertexFlow of dataflow.vertexList){
+            if(!dataflow.vertexFlowMap.get(vertexFlow).flowRenderDone){
+                state.allFlowRenderDone = false
+                return
+            }
+        }
+        console.log("all done")
+        state.allFlowRenderDone = true
+    },
     getTasksFlow(state, {appName: appName}) {
         dataService.getTasksFlow({"app": appName}, resp => {
             initVertexFlow(state, resp, appName)

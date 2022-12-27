@@ -6,17 +6,19 @@
     </g>
     <g v-if="!isDetailedFlow" @click="handleVertexClick($event)">
       <VertexBytesFlow :flow="overviewFlow"
+                       :vertexFlow="vertexFlow"
+                       :dataflow="dataflow"
                        :xScale="vertexFlow.xScale"
                        :yScale="vertexFlow.yScale"
                        :isOverview="isOverview"></VertexBytesFlow>
     </g>
-    <g>
-      <dataflowInfo :flow="overviewFlow"
-                    :vertexFlow="vertexFlow"
-                    :xScale="vertexFlow.xScale"
-                    :yScale="vertexFlow.yScale"
-                    ></dataflowInfo>
-    </g>
+<!--    <g>-->
+<!--      <dataflowInfo v-if="allFlowRenderDone" :flow="overviewFlow"-->
+<!--                    :vertexFlow="vertexFlow"-->
+<!--                    :xScale="vertexFlow.xScale"-->
+<!--                    :yScale="vertexFlow.yScale"-->
+<!--                    ></dataflowInfo>-->
+<!--    </g>-->
   </g>
 </template>
 
@@ -24,6 +26,7 @@
 import TasksFlow from "@/components/Dataflow/flow/TasksFlow";
 import VertexBytesFlow from "@/components/Dataflow/flow/VertexBytesFlow";
 import DataflowInfo from "@/components/Dataflow/flow/dataflowInfo";
+import {mapState} from "vuex";
 
 export default {
   name: "VertexFlow",
@@ -35,6 +38,7 @@ export default {
   },
   methods: {
     handleVertexClick(e) {
+      console.log(this.vertexFlow.vertexName)
       if (this.dataflow.selectedVertex === this.vertexFlow.vertexName)
         this.dataflow.selectedVertex = ""
       else
@@ -45,11 +49,17 @@ export default {
   created() {
   },
   computed: {
+    ...mapState('dataflow', {
+      allFlowRenderDone: state=>state.allFlowRenderDone
+    }),
     detailedFlow() {
       return this.vertexFlow.taskFlows
     },
     overviewFlow() {
       return this.vertexFlow.flow
+    },
+    vertexName(){
+      return this.vertexFlow.vertexName
     },
     xOff() {
       return this.vertexFlow.xOff

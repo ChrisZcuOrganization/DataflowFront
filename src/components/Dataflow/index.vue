@@ -11,7 +11,7 @@
       </div>
     </div>
     <div v-if="!isQueryFlow" style="width: 100%; height: 100%">
-      <div style="width: 100%; height: 100%">
+      <div style="width: 100%; height: 100%; ">
 <!--        <svg t="1658991951479" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"-->
 <!--             p-id="2343" width="220" height="32" @click="changeDetailsShow"-->
 <!--             transform="translate(500,0)">-->
@@ -24,7 +24,7 @@
 <!--              p-id="2344" :fill="isDetailedFlow ? '#1296db' : '#2c2c2c'">-->
 <!--          </path>-->
 <!--        </svg>-->
-        <svg v-if="tasksLayoutDone" class="vertexFlowClass" style="width: 100%; height: 100%;overflow-x: scroll">
+        <svg v-if="tasksLayoutDone" class="vertexFlowClass" style="width: 100%; height: 100%;">
           <g transform="translate(10,10)">
             <g v-if="false">
               <g v-for="(cntFlow, id) in connectedFlow" :key="id">
@@ -37,6 +37,14 @@
                             :isDetailedFlow="isDetailedFlow"
                             :dataflow = "dataflow"
                 ></VertexFlow>
+              </g>
+              <g v-for="(vertexFlow, idx) in vertexesFlow" :key="'i' + idx">
+                <dataflowInfo :flow="vertexFlow.flow"
+                              :vertexFlow="vertexFlow"
+                              :xScale="vertexFlow.xScale"
+                              :yScale="vertexFlow.yScale"
+                              :boundHeight="boundHeight"
+                ></dataflowInfo>
               </g>
             </g>
           </g>
@@ -51,11 +59,12 @@ import {mapState} from "vuex";
 import VertexFlow from "@/components/Dataflow/flow/VertexFlow";
 import ConnectedFlow from "@/components/Dataflow/flow/ConnectedFlow";
 import QueryFlow from "@/components/Dataflow/flow/QueryFlow";
+import DataflowInfo from "@/components/Dataflow/flow/dataflowInfo";
 
 export default {
   name: "Dataflow",
   props: ["dataflow", "isQueryFlow", "height"],
-  components: {QueryFlow, VertexFlow, ConnectedFlow},
+  components: {QueryFlow, VertexFlow, ConnectedFlow,DataflowInfo},
   data() {
     return {
       width: -1,
@@ -103,6 +112,9 @@ export default {
       // tasksLayoutDone: state => state.tasksLayoutDone,
       // flowMap: state => state.flowMap
     }),
+    boundHeight(){
+      return this.$el.getBoundingClientRect().height - 10
+    },
     tasksLayoutDone() {
       return this.dataflow.tasksLayoutDone
     }
