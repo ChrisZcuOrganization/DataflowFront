@@ -1,7 +1,18 @@
 <template>
   <g :transform="'translate('+[xOff,globalOff + yOff]+ ')'" @click="handleClick">
-    <rect :width="width" :height="height" :fill="color" stroke="grey" stroke-width="2"></rect>
-    <text font-size="15" font-family="Arial" :transform="'translate('+[textXOff,0]+ ')'">{{ vertex.vertexName.replace('Reducer ', 'R').replace('Map ', 'M') }}</text>
+    <rect :width="totalWidth" :height="height" fill="none" :stroke="color" :stroke-width="boardWidth"></rect>
+    <rect :width="inputWidth" :height="height" fill="rgb(252,78,42)" stroke="grey" stroke-width="2"
+          opacity="0.8"></rect>
+    <rect :width="proWidth" :height="3 * height / 4" :x="xScale(vertex.processStartTime) - xOff"
+          :y="1 * height / 4"
+          fill="rgb(141,211,199)" stroke="grey" stroke-width="2"></rect>
+    <rect :width="outputWidth" :height="height / 2" fill="rgb(252,205,229)" stroke="grey"
+          :x="xScale(vertex.outputStartTime)  - xOff"
+          :y=" height / 2"
+          stroke-width="2"></rect>
+    <text font-size="15" font-family="Arial" :transform="'translate('+[textXOff,0]+ ')'">
+      {{ vertex.vertexName.replace('Reducer ', 'R').replace('Map ', 'M') }}
+    </text>
   </g>
 </template>
 
@@ -16,6 +27,7 @@ export default {
   },
   methods: {
     handleClick() {
+      this.vertex.isShowOprInfo = !this.vertex.isShowOprInfo
       if (this.dataflow.selectedVertex === this.vertex.vertexName)
         this.dataflow.selectedVertex = ""
       else
@@ -33,14 +45,29 @@ export default {
     xOff() {
       return this.xScale(this.vertex.totalStartTime)
     },
-    width() {
+    totalWidth() {
       return this.xScale(this.vertex.totalEndTime) - this.xScale(this.vertex.totalStartTime)
     },
-    color() {
-      return "white"
+    inputWidth() {
+      return this.xScale(this.vertex.inputEndTime) - this.xScale(this.vertex.totalStartTime)
     },
-    textXOff(){
+    proWidth() {
+      return this.xScale(this.vertex.processEndTime) - this.xScale(this.vertex.processStartTime)
+    },
+    outputWidth() {
+      return this.xScale(this.vertex.totalEndTime) - this.xScale(this.vertex.outputStartTime)
+    },
+    color() {
+      return this.dataflow.selectedVertex !== this.vertex.vertexName ? "grey" : "rgb(254,178,76)"
+    },
+    boardWidth() {
+      return this.dataflow.selectedVertex !== this.vertex.vertexName ? 2 : 8
+    },
+    textXOff() {
       return this.vertex.totalEndTime + 1000 >= this.dataflow.endTime ? -20 : 0
+    },
+    isReducer() {
+      return this.vertex.vertexName.indexOf("Reducer") !== -1
     }
   }
 }

@@ -42,8 +42,8 @@
                 <TasksDetails style="width: 100%; height: 100%; margin: 2px"
                               :dataflow="dataflow"></TasksDetails>
               </div>
-              <div class="borderedRect" style="height: 255px; width: calc(100% - 8px); margin: 2px;">
-                Tasks counter distribution
+              <div class="borderedRect" style="height: 258px; width: calc(100% - 8px); margin: 2px;">
+                <Counter style="width: 100%; height: 100%;" :dataflow="dataflow"></Counter>
               </div>
             </div>
           </el-col>
@@ -59,10 +59,11 @@ import TDAG from "@/components/TDAG"
 
 import {mapState} from "vuex";
 import TasksDetails from "@/components/TasksDetails";
+import Counter from "@/components/Counter";
 
 export default {
   name: "MainView",
-  components: {TasksDetails, Dataflow, TDAG},
+  components: {Counter, TasksDetails, Dataflow, TDAG},
   mounted() {
 
     this.$store.commit("dataflow/getTasksFlow", {appName: "query29"})
@@ -84,6 +85,7 @@ export default {
 <style>
 .borderedRect {
   border: 2px solid rgba(128, 128, 128, 0.9);
+  background-color: #f5f5f5;
 }
 
 </style>

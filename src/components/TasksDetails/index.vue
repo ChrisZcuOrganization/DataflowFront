@@ -1,13 +1,13 @@
 <template>
   <div style="width: 100%; height: 100%; overflow-y: scroll">
-    <el-row v-for="c in containers" :key="c"  style="margin: 0px; height: 25px">
+    <el-row v-for="c in containers" :key="c" style="margin: 0px; height: 25px">
       <el-col class="borderedRect" :span="1">
         <div style="font-family: 'Arial','Times New Roman';font-size: 1px; margin-top: 3px;">
           {{ c }}
         </div>
       </el-col>
       <el-col :span="23" class="borderedRect">
-        <ContainerTasks style="height: 17px; width: 100%"
+        <ContainerTasks style="height: 17px; width: calc(100% - 5px);"
                         :mapTasks="containersTasks[c]['map']"
                         :reducerTasks="containersTasks[c]['reducer']"
                         :height="17"

@@ -29,7 +29,7 @@ export default {
       return this.xScale(this.task.end_time)
     },
     strokeWidth() {
-      return this.task.vertex === this.dataflow.selectedVertex ? 3 : 0
+      return this.task.vertex === this.dataflow.selectedVertex ? (this.task.vertex.indexOf("Reducer") === -1 ? 5: 3) : 0
     },
   }
 }

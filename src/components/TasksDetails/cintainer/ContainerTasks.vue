@@ -26,18 +26,19 @@
                 :offset="colorTick.percent + '%'" :stop-color="colorTick.color"/>
         </linearGradient>
       </defs>
+      <g transform="translate(3,0)">
+        <Task v-if="initDone" v-for="(taskItem, index) in mapTasks" :key="index"
+              :task="taskItem"
+              :xScale="xScale"
+              :height="height - 2"
+              :dataflow="dataflow"></Task>
 
-      <Task v-if="initDone" v-for="(taskItem, index) in mapTasks" :key="index"
-            :task="taskItem"
-            :xScale="xScale"
-            :height="height - 2"
-            :dataflow="dataflow"></Task>
-
-      <ReducerTask v-if="initDone" v-for="(taskItem, index) in reducerTasks" :key="'r' + index"
-            :task="taskItem"
-            :xScale="xScale"
-            :height="height - 2"
-            :dataflow="dataflow"></ReducerTask>
+        <ReducerTask v-if="initDone" v-for="(taskItem, index) in reducerTasks" :key="'r' + index"
+                     :task="taskItem"
+                     :xScale="xScale"
+                     :height="height - 2"
+                     :dataflow="dataflow"></ReducerTask>
+      </g>
     </svg>
   </div>
 </template>

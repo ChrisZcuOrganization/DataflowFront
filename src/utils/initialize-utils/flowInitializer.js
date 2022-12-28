@@ -18,14 +18,21 @@ export function initVertexFlow(state, flows, flowName) {
         let vertex = new VertexFlow()
         let flow = vertexesFlow[vName]
         vertex.vertexName = vName
+
+        vertex.operatorsList = flow["operators"]
         vertex.startTime = flow["start_time"]
         vertex.totalStartTime = flow["total_start_time"]
-
+        vertex.processStartTime = flow["process_start_time"]
+        vertex.outputStartTime=flow["output_start_time"]
+        vertex.processEndTime = flow["process_end_time"]
+        vertex.inputEndTime = flow["input_end_time"]
         vertex.endTime = flow["end_time"]
         vertex.totalEndTime = flow["total_end_time"]
 
         vertex.srcDataDis = flow["src_data_dis"]
         vertex.calDataDis = flow["cal_data_dis"]
+
+        vertex.tasksList = flow["tasks_list"]
 
         vertex.initTasksFlow(flow["start_time"], flow["end_time"], flow["tasks_flow"])
 

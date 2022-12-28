@@ -20,7 +20,6 @@ const mutations = {
                 return
             }
         }
-        console.log("all done")
         state.allFlowRenderDone = true
     },
     getTasksFlow(state, {appName: appName}) {

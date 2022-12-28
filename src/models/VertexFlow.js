@@ -4,15 +4,25 @@ import * as d3 from "d3";
 
 export class VertexFlow {
     vertexName
+    /**operators**/
+    operatorsList
+
+    //time information
     startTime
     endTime
-
     totalStartTime
+    processStartTime
+    outputStartTime
+    inputEndTime
+    processEndTime
     totalEndTime
 
     /**The exact flow unit*/
     flow
     flowRenderDone = false
+    /**data distribution**/
+    srcDataDis
+    calDataDis
 
     xOff
     yOff
@@ -22,8 +32,7 @@ export class VertexFlow {
     isShowDataInfo = false
     isShowOprInfo = false
 
-    srcDataDis
-    calDataDis
+    tasksList
 
     xScale
     yScale
