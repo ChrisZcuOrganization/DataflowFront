@@ -38,11 +38,14 @@
           </el-col>
           <el-col style="height: 100%; width: 60%;">
             <div class="borderedRect" style="height: 100%; width: calc(100% - 8px); margin: 2px;">
-              <div class="borderedRect" style="height: 600px; width: calc(100% - 8px); margin: 2px;">
+              <div class="borderedRect" style="height: 50px; width: calc(100% - 8px); margin: 2px;">
+                <Parallelism style="margin: 2px" :dataflow="dataflow"></Parallelism>
+              </div>
+              <div class="borderedRect" style="height: 550px; width: calc(100% - 8px); margin: 2px;">
                 <TasksDetails style="width: 100%; height: 100%; margin: 2px"
                               :dataflow="dataflow"></TasksDetails>
               </div>
-              <div class="borderedRect" style="height: 258px; width: calc(100% - 8px); margin: 2px;">
+              <div class="borderedRect" style="height: 254px; width: calc(100% - 8px); margin: 2px;">
                 <Counter style="width: 100%; height: 100%;" :dataflow="dataflow"></Counter>
               </div>
             </div>
@@ -60,10 +63,11 @@ import TDAG from "@/components/TDAG"
 import {mapState} from "vuex";
 import TasksDetails from "@/components/TasksDetails";
 import Counter from "@/components/Counter";
+import Parallelism from "@/components/Parallelism";
 
 export default {
   name: "MainView",
-  components: {Counter, TasksDetails, Dataflow, TDAG},
+  components: {Parallelism, Counter, TasksDetails, Dataflow, TDAG},
   mounted() {
 
     this.$store.commit("dataflow/getTasksFlow", {appName: "query29"})

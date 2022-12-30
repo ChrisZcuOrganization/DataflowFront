@@ -66,6 +66,7 @@ export default {
   mounted() {
     let width = this.$el.getBoundingClientRect().width
     this.xScale = d3.scaleLinear().domain([this.dataflow.startTime, this.dataflow.endTime]).range([0, width])
+    // console.log(width)
     this.initDone = true
   },
   methods: {

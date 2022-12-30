@@ -1,14 +1,14 @@
 <template>
   <g>
-<!--    <linearGradient :id="'grad-shuffle-' + task.taskId"-->
-<!--                    x1="0" x2="1" y1="0" y2="0">-->
-<!--      <stop v-for="(colorTick, idx) in shuffleColorTick" :key="idx"-->
-<!--            :offset="colorTick.percent + '%'" :stop-color="colorTick.color"/>-->
-<!--    </linearGradient>-->
-<!--    :fill="'url(#grad-shuffle-'+task.taskId+')'"-->
+    <linearGradient :id="'grad-shuffle-' + task.taskId"
+                    x1="0" x2="1" y1="0" y2="0">
+      <stop v-for="(colorTick, idx) in shuffleColorTick" :key="idx"
+            :offset="colorTick.percent + '%'" :stop-color="colorTick.color"/>
+    </linearGradient>
+    <!--    :fill="'url(#grad-shuffle-'+task.taskId+')'"-->
 
     <g :transform="'translate(' + [startX, 0] + ')'">
-      <rect :width="endX - startX" :height="height" fill="white"
+      <rect :width="endX - startX" :height="height" :fill="'url(#grad-shuffle-'+task.taskId+')'"
             stroke="black" :stroke-width=strokeWidth></rect>
     </g>
     <g :transform="'translate(' + [processStartX, 0] + ')'">
@@ -40,11 +40,36 @@ export default {
       trend.forEach(t => {
         if (t.type === 'start') {
           rate += t.rate
-        }else{
+        } else {
           rate -= rate
         }
         res.push({'time': t.time, 'rate': rate})
       })
+      return res
+    },
+    getSampleTrend(shuffleList) {
+      let trend = []
+      shuffleList.forEach(sf => {
+        trend.push({
+          'startTime': sf.end_time - sf.time_taken,
+          'endTime': sf.end_time,
+          'rate': sf.rate,
+          'size': sf.csize
+        })
+      })
+      trend.sort((a, b) => (a.endTime > b.endTime) ? 1 : -1)
+      let gap = Math.round(trend.length / 10)
+      let res = []
+
+      for (let idx = 0; idx < trend.length; idx += gap) {
+        let size = 0, time = 0, length = d3.min([idx + gap, trend.length])
+        for (let i = idx; i < length; ++i) {
+          size += trend[i].size
+          time += trend[i].endTime - trend[i].startTime
+        }
+        if (trend[length - 1] !== undefined)
+          res.push({'time': trend[length - 1].endTime, 'rate': size / time / 1000})
+      }
       return res
     },
     genShuffleColorTick() {
@@ -57,11 +82,12 @@ export default {
       }
 
       let shuffleInfo = this.task.shuffle_info
-      let trend = this.getTrend(shuffleInfo)
+      // let trend = this.getTrend(shuffleInfo)
+      let trend = this.getSampleTrend(shuffleInfo)
       let startTime = this.task.start_time
       let endTime = this.task.end_time
       let colorTicks = []
-      let maxRate =  d3.max(trend, t => t.rate)
+      let maxRate = d3.max(trend, t => t.rate)
       trend.forEach(sf => {
         colorTicks.push({
           percent: timePer(sf.time, startTime, endTime),

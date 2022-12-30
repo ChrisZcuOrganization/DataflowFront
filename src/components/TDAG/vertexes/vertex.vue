@@ -28,6 +28,8 @@ export default {
   methods: {
     handleClick() {
       this.vertex.isShowOprInfo = !this.vertex.isShowOprInfo
+      // if (this.vertex.isShowDataInfo)
+      //   this.dataflow.selectedVertex = this.vertex.vertexName
       if (this.dataflow.selectedVertex === this.vertex.vertexName)
         this.dataflow.selectedVertex = ""
       else
@@ -58,9 +60,15 @@ export default {
       return this.xScale(this.vertex.totalEndTime) - this.xScale(this.vertex.outputStartTime)
     },
     color() {
+      if (this.vertex.isShowOprInfo || this.vertex.isShowDataInfo) {
+        return "rgb(254,178,76)"
+      }
       return this.dataflow.selectedVertex !== this.vertex.vertexName ? "grey" : "rgb(254,178,76)"
     },
     boardWidth() {
+      if (this.vertex.isShowOprInfo || this.vertex.isShowDataInfo) {
+        return 8
+      }
       return this.dataflow.selectedVertex !== this.vertex.vertexName ? 2 : 8
     },
     textXOff() {

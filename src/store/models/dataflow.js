@@ -13,9 +13,9 @@ const state = () => ({
 const actions = {}
 
 const mutations = {
-    updateFlowRender(state, {dataflow:dataflow}){
-        for(let vertexFlow of dataflow.vertexList){
-            if(!dataflow.vertexFlowMap.get(vertexFlow).flowRenderDone){
+    updateFlowRender(state, {dataflow: dataflow}) {
+        for (let vertexFlow of dataflow.vertexList) {
+            if (!dataflow.vertexFlowMap.get(vertexFlow).flowRenderDone) {
                 state.allFlowRenderDone = false
                 return
             }

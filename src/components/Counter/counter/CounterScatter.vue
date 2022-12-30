@@ -43,8 +43,12 @@ export default {
           .attr('cy', function (d) {
             return d.cy
           })
-          .attr('r', 5)
-          .attr('fill', "red")
+          .attr('r', 6)
+          .attr('fill', "rgb(103,169,207)")
+          .attr("opacity", 0.7)
+      // .attr('stroke', "grey")
+      // .attr('stroke-width', "2")
+
       canvas.append('g').attr('class', 'YAxis').attr("transform", "translate(" + this.leftBound + ",0)")
       var yScale = d3.scaleLinear()
           .domain(d3.extent(this.counterValues))

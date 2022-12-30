@@ -1,13 +1,13 @@
 <template>
   <div style="height:100%; width: 100%">
-    <el-col style="height:248px; width: 25%">
+    <el-col style="height:244px; width: 25%">
       <div v-if="tasksList.length > 0" class="borderedRect"
            style="height:100%; width: 100%; margin-top:4px; overflow-y: scroll;overflow-x: hidden">
         <counterList @counterChange="handleCounterChange" :tasksList="tasksList" :counterMap="counterMap"/>
       </div>
     </el-col>
-    <el-col style="height:248px; width: calc(75% - 10px); margin-left: 10px">
-      <el-row style="height: 10%; width: 100%">{{ counterName }}</el-row>
+    <el-col style="height:244px; width: calc(75% - 10px); margin-left: 10px">
+      <el-row v-if="counterName !== '' && tasksList.length > 0" style="height: 10%; width: 100%">{{ counterName }}</el-row>
       <el-row style="height: 90%; width: 100%">
         <counterScatter v-if="counterName !== '' && tasksList.length > 0"
                         style="height:100%; width: 100%"

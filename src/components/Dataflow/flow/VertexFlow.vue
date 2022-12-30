@@ -68,6 +68,9 @@ export default {
       return this.vertexFlow.yOff
     },
     isOverview() {
+      if (this.vertexFlow.isShowOprInfo || this.vertexFlow.isShowDataInfo){
+        return true
+      }
       return this.dataflow.selectedVertex === this.vertexFlow.vertexName
     }
   },
