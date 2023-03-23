@@ -1,14 +1,14 @@
 <template>
   <g>
     <g v-for="(model, id) in pathModels" :key="id" class="tasksFlow">
-      <path :d="model.get('beforeProFlow')" fill="red"
-            stroke="rgb(125, 125, 125)"
+      <path :d="model.get('beforeProFlow')" fill="rgb(252,78,42)"
+            stroke="rgb(252,78,42)"
             stroke-width="0"></path>
-      <path :d="model.get('leftFlow')" fill="green"
-            stroke="rgb(125, 125, 125)"
+      <path :d="model.get('leftFlow')" fill="rgb(141,211,199)"
+            stroke="rgb(141,211,199)"
             stroke-width="0"></path>
-      <path :d="model.get('processedFlow')" fill="blue"
-            stroke="rgb(125, 125, 125)"
+      <path :d="model.get('processedFlow')" fill="rgb(34,94,168)"
+            stroke="rgb(34,94,168)"
             stroke-width="0"></path>
     </g>
     <!--    <g>-->

@@ -48,8 +48,8 @@ function vexInteract(vex1, vex2) {
         // if (((vex1.yOff - (vex2.flow.heights[vex2VerifiedIdx] + vex2.yOff)) * (vex1.flow.heights[vex1VerifyIdx] + vex1.yOff - vex2.yOff)) < 0) {
         //     return true
         // }
-        if (((vex1.yOff - (vex2.flow.processedFlow[vex2VerifiedIdx] + vex2.flow.leftFlow[vex2VerifiedIdx] + vex2.flow.beforeProFlow[0] + vex2.yOff))
-            * (vex1.flow.processedFlow[vex2VerifiedIdx] + vex1.flow.leftFlow[vex2VerifiedIdx] + vex1.flow.beforeProFlow[0] + vex1.yOff - vex2.yOff)) < 0)
+        if (((vex1.yOff - (vex2.maxProcessHeight + vex2.flow.processedFlow[vex2VerifiedIdx] + vex2.flow.leftFlow[vex2VerifiedIdx] + vex2.flow.beforeProFlow[0] + vex2.yOff))
+            * (vex1.maxProcessHeight + vex1.flow.processedFlow[vex2VerifiedIdx] + vex1.flow.leftFlow[vex2VerifiedIdx] + vex1.flow.beforeProFlow[0] + vex1.yOff - vex2.yOff)) < 0)
             return true
         curTime = vex1.flow.times[vex1VerifyIdx] + 1
     }
@@ -82,7 +82,7 @@ export function neighborLayout(dataflow, y, height) {
         targetVex.srcVertexesFlow.forEach(flow => {
             if (flow.maxScore > targetVex.leaderVertex.maxScore) {
                 targetVex.leaderVertex = flow
-                targetVex.yOff = flow.yOff + flow.flow.beforeProFlow[0] + d3.max([maxHeight / 10, flow.maxScore / 3])
+                targetVex.yOff = flow.yOff + flow.flow.beforeProFlow[0] + d3.max([maxHeight / 10, flow.maxScore / 5])
             }
         })
         let interactedVex = verityInteracted(targetVex, finishedVertexList)
@@ -99,7 +99,7 @@ export function neighborLayout(dataflow, y, height) {
         targetVex.dstVertexesFlow.forEach(flow => {
             if (flow.maxScore > targetVex.leaderVertex.maxScore) {
                 targetVex.leaderVertex = flow
-                targetVex.yOff = flow.yOff + d3.max([maxHeight / 10, flow.maxScore / 3])
+                targetVex.yOff = flow.yOff + d3.max([maxHeight / 10, flow.maxScore / 5])
             }
         })
         let interactedVex = verityInteracted(targetVex, finishedVertexList)
@@ -112,6 +112,12 @@ export function neighborLayout(dataflow, y, height) {
 
     let yOff = 0
     finishedVertexList.forEach(vex => {
+        // console.log(vex)
+        if (vex.vertexName !== "Map 10"){
+            // console.log(vex.vertexName, vex.yOff)
+            vex.yOff += 2646197500
+            // 8168506177.
+        }
         yOff = d3.max([yOff, vex.yOff + vex.maxScore])
     })
     dataflow.updateYScale([0, yOff], [y, y + height])
@@ -121,6 +127,7 @@ export function neighborLayout(dataflow, y, height) {
     // TDAGLayout(dataflow)
     TDAGGreedyLayout(dataflow)
     // console.log(dataflow)
+
 }
 
 function offSortedVertexFlow(dataflow) {
@@ -167,11 +174,24 @@ function processData(dataflow) {
         }
     }
     graph.greedyGraphLayout()
-
+    let tmpMap = new Map()
+    tmpMap.set("Map 12", 1)
+    tmpMap.set("Reducer 3", 1)
+    tmpMap.set("Map 7", 2)
+    tmpMap.set("Reducer 2", 2)
+    tmpMap.set("Reducer 4", 2)
+    tmpMap.set("Map 6", 3)
+    tmpMap.set("Map 1", 4)
+    tmpMap.set("Reducer 5", 3)
+    tmpMap.set("Map 10", 4)
+    tmpMap.set("Map 11", 3)
+    tmpMap.set("Reducer 9", 3)
+    tmpMap.set("Map 8", 5)
     // let tmp = []
     for (let node of graph.nodes) {
         // tmp.push({"id": node.id, "layer": node.layer, "y": node.y})
-        dataflow.vertexFlowMap.get(node.id).TDAGYOff = node.layer
+        // dataflow.vertexFlowMap.get(node.id).TDAGYOff = node.layer
+        dataflow.vertexFlowMap.get(node.id).TDAGYOff = tmpMap.get(node.id)
     }
     // tmp.sort((a, b) => (a.y > b.y ? 1 : -1))
     // console.log(tmp)

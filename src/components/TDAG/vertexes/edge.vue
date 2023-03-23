@@ -26,8 +26,8 @@ export default {
       let dstXOff = this.xScale(dstVex.totalStartTime)
 
       return link({
-        source: [srcXOff, srcYOff],
-        target: [dstXOff, dstYOff]
+        source: [5 + srcXOff, srcYOff],
+        target: [5 + dstXOff, dstYOff]
       })
     }
   }

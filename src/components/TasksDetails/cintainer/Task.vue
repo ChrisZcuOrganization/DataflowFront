@@ -2,7 +2,7 @@
   <g :transform="'translate(' + [startX, 0] + ')'">
     <g>
       <rect :width="endX - startX" :height="height" fill="none"
-            stroke="black" :stroke-width=strokeWidth></rect>
+            stroke="black" :stroke-width=0></rect>
     </g>
     <g :transform="'translate(' + [0, 2] + ')'">
       <rect :width="endX - startX" :height="height / 2 - 1" :fill="'url(#grad-inputMapSpeed-' + task.task_id + ')'"

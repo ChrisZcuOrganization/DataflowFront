@@ -1,14 +1,18 @@
 <template>
   <g>
-    <path :d="beforeProFlow" fill="rgb(252,78,42)"
-          stroke="none"
-          stroke-width="1"></path>
-    <path :d="processedFlow" fill="rgb(34,94,168)"
-          stroke="none"
-          stroke-width="1"></path>
-    <path :d="leftFlow" fill="rgb(141,211,199)"
-          stroke="none"
-          stroke-width="1"></path>
+    <g id="queryFlowTimeAxis" transform="translate(7,2)"></g>
+    <svg y="25">
+      <path :d="beforeProFlow" fill="rgb(252,78,42)"
+            stroke="rgb(252,78,42)"
+            stroke-width="1"></path>
+      <path :d="processedFlow" fill="rgb(34,94,168)"
+            stroke="rgb(34,94,168)"
+            stroke-width="1"></path>
+      <path :d="leftFlow" fill="rgb(141,211,199)"
+            stroke="rgb(141,211,199)"
+            stroke-width="1"></path>
+    </svg>
+
   </g>
 </template>
 
@@ -19,6 +23,21 @@ import {areaGen} from "@/utils/util";
 export default {
   name: "QueryFlow",
   props: ["queryFlow", "xScale", "yScale"],
+  mounted() {
+    this.boundWidth = this.$el.getBoundingClientRect().width - 5
+    this.boundHeight = this.$el.getBoundingClientRect().height
+    // this.xScale = d3.scaleLinear().domain([this.dataflow.startTime, this.dataflow.endTime]).range([0, this.boundWidth])
+    let yScale = d3.scaleLinear()
+        .domain([0, this.queryFlow.times[this.queryFlow.times.length - 1] - this.queryFlow.times[0]])
+        .range([0, this.boundWidth])
+    // console.log(0, this.queryFlow.times, this.startTime, this.endTime)
+    d3.select(this.$el).select('#queryFlowTimeAxis').call(d3.axisBottom(yScale).ticks(10).tickFormat(d => {
+      return d / 1000 + "s"
+    }).tickSize(3))
+    d3.select(this.$el).select('#queryFlowTimeAxis').selectAll('text').attr("font-size", "15px").attr("stroke-width", 1)
+
+
+  },
   computed: {
     timeLength() {
       return this.queryFlow.times.length
@@ -70,4 +89,9 @@ export default {
 
 <style scoped>
 
+#queryFlowTimeAxis {
+  fill: none;
+  stroke: #2d2d2d;
+  shape-rendering: crispEdges;
+}
 </style>

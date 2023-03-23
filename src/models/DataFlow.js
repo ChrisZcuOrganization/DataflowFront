@@ -82,11 +82,11 @@ export class DataFlow {
             if (_this.cntSrcToDstMap[vex]) {
                 let srcFlow = _this.vertexFlowMap.get(vex)
                 let dsts = _this.cntSrcToDstMap[vex]
-                let srcInfo = [srcFlow.xScale(srcFlow.endTime), srcFlow.yScale(0), srcFlow.yScale(srcFlow.flow.heights[srcFlow.flow.heights.length - 1])]
+                let srcInfo = [srcFlow.xScale(srcFlow.endTime), srcFlow.yScale(0), srcFlow.yScale(srcFlow.flow.beforeProFlow[0])]
                 dsts.forEach(dst => {
                     let dstVex = _this.vertexFlowMap.get(dst)
                     let dstInfo = [dstVex.xScale(dstVex.startTime), dstVex.yScale(0), dstVex.yScale(dstVex.flow.heights[0])]
-                    _this.connectedFlows.push([srcInfo, dstInfo])
+                    _this.connectedFlows.push([[dstVex.xScale(d3.min([dstVex.totalStartTime, srcFlow.endTime])), srcInfo[1], srcInfo[2]], dstInfo])
                 })
             }
         })

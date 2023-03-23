@@ -1,6 +1,6 @@
 <template>
   <g>
-    <linearGradient :id="'grad-shuffle-' + task.taskId"
+    <linearGradient :id="'grad-shuffle-' + task.task_id"
                     x1="0" x2="1" y1="0" y2="0">
       <stop v-for="(colorTick, idx) in shuffleColorTick" :key="idx"
             :offset="colorTick.percent + '%'" :stop-color="colorTick.color"/>
@@ -8,8 +8,8 @@
     <!--    :fill="'url(#grad-shuffle-'+task.taskId+')'"-->
 
     <g :transform="'translate(' + [startX, 0] + ')'">
-      <rect :width="endX - startX" :height="height" :fill="'url(#grad-shuffle-'+task.taskId+')'"
-            stroke="black" :stroke-width=strokeWidth></rect>
+      <rect :width="endX - startX" :height="height" :fill="'url(#grad-shuffle-'+task.task_id+')'"
+            stroke="black" :stroke-width=0></rect>
     </g>
     <g :transform="'translate(' + [processStartX, 0] + ')'">
       <rect :width="endX - processStartX" :height="height" :fill="'url(#grad-processReducerSpeed-' + task.task_id + ')'"
@@ -21,7 +21,9 @@
 <script>
 import * as d3 from "d3";
 
-const inputColorGen = d3.interpolateRgb('rgba(255,255,255,0.98)', 'rgb(189,0,38)')
+const inputColorGen = d3.interpolateRgb('rgb(226,189,177)', 'rgb(189,0,38)')
+const inputColorGenTmp = d3.interpolateRgb('rgba(252,235,211,0.2)', 'rgba(189,0,38,0.2)')
+// const inputColorGenTmp = d3.interpolateRgb('rgba(226,189,177,0.2)', 'rgba(189,0,38,0.2)')
 
 export default {
   name: "ReducerTask",
@@ -58,7 +60,7 @@ export default {
         })
       })
       trend.sort((a, b) => (a.endTime > b.endTime) ? 1 : -1)
-      let gap = Math.round(trend.length / 10)
+      let gap = trend.lengt > 5 ? Math.round(trend.length / 5) : 1
       let res = []
 
       for (let idx = 0; idx < trend.length; idx += gap) {
@@ -67,8 +69,8 @@ export default {
           size += trend[i].size
           time += trend[i].endTime - trend[i].startTime
         }
-        if (trend[length - 1] !== undefined)
-          res.push({'time': trend[length - 1].endTime, 'rate': size / time / 1000})
+        // if (trend[length - 1] !== undefined)
+        res.push({'time': trend[length - 1].endTime, 'rate': size / time / 1000})
       }
       return res
     },
@@ -88,10 +90,14 @@ export default {
       let endTime = this.task.end_time
       let colorTicks = []
       let maxRate = d3.max(trend, t => t.rate)
+      let flag = this.task.vertex === "Map 1"
+      // flag = true
+      // console.log(flag, this.task.task_id)
       trend.forEach(sf => {
+        let color = flag ? inputColorGen(sf.rate / (maxRate + 10)) : inputColorGenTmp(sf.rate / (maxRate + 10))
         colorTicks.push({
           percent: timePer(sf.time, startTime, endTime),
-          color: inputColorGen(sf.rate / (maxRate + 10))
+          color: color
         })
       })
       return colorTicks

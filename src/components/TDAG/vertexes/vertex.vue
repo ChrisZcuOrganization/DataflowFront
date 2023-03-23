@@ -1,5 +1,5 @@
 <template>
-  <g :transform="'translate('+[xOff,globalOff + yOff]+ ')'" @click="handleClick">
+  <g :transform="'translate('+[5 + xOff,globalOff + yOff]+ ')'" @click="handleClick">
     <rect :width="totalWidth" :height="height" fill="none" :stroke="color" :stroke-width="boardWidth"></rect>
     <rect :width="inputWidth" :height="height" fill="rgb(252,78,42)" stroke="grey" stroke-width="2"
           opacity="0.8"></rect>

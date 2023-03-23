@@ -1,5 +1,5 @@
 <template>
-  <g @click="handleClick($event)">
+  <svg @click="handleClick($event)">
     <g v-if="isOverview" style="z-index: 100">
       <path :d="pathModels" fill="none"
             stroke="rgb(254,178,76)"
@@ -16,11 +16,16 @@
             stroke="rgb(141,211,199)"
             stroke-width="1"></path>
     </g>
-<!--    <g v-if="isShowInfo" :transform="'translate(' +infoRect+')'" style="z-index: -1">-->
-<!--      <rect width="100" height="100" fill="black"></rect>-->
-<!--    </g>-->
+    <g :transform="'translate(' + infoRect + ')'">
+      <text font-size="15" font-family="Arial">
+        {{ vertexFlow.vertexName.replace('Reducer ', 'R').replace('Map ', 'M') }}
+      </text>
+    </g>
+    <!--    <g v-if="isShowInfo" :transform="'translate(' +infoRect+')'" style="z-index: -1">-->
+    <!--      <rect width="100" height="100" fill="black"></rect>-->
+    <!--    </g>-->
     <!--    <g id="infoCanvas"></g>-->
-  </g>
+  </svg>
 </template>
 
 <script>
@@ -29,7 +34,7 @@ import * as d3 from "d3"
 
 export default {
   name: "VertexBytesFlow",
-  props: ["flow", "xScale", "yScale", "isOverview","vertexFlow","dataflow"],
+  props: ["flow", "xScale", "yScale", "isOverview", "vertexFlow", "dataflow"],
   created() {
   },
   data() {
@@ -53,7 +58,13 @@ export default {
   computed: {
     infoRect() {
       let maxBeforeHeight = this.flow.beforeProFlow[0]
-      return [this.xScale(this.flow.times[(this.flow.times.length - 1) / 10]), this.yScale(maxBeforeHeight - maxBeforeHeight / 3)]
+      let xOff = (this.vertexFlow.vertexName === "Map 1")? -30 : 0
+      xOff = this.vertexFlow.vertexName === "Reducer 4" ? -20 : 0
+      if (this.vertexFlow.vertexName === "Reducer 5")
+        xOff = -22
+      let yOff = this.vertexFlow.vertexName === "Map 8"? 50 : this.vertexFlow.vertexName === "Map 1"? 80 : 0
+
+      return [this.xScale(this.flow.times[0]) + xOff, this.yScale(maxBeforeHeight - this.flow.beforeProFlow[0]) + yOff]
     },
     timeLength() {
       return this.flow.times.length

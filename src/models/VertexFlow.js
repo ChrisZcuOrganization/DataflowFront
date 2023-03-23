@@ -50,6 +50,8 @@ export class VertexFlow {
     leadingVertexes = []
     maxScore
 
+    maxProcessHeight = 0
+
     constructor() {
         this.flow = new Flow()
         this.xScale = d3.scaleLinear()
@@ -83,6 +85,7 @@ export class VertexFlow {
         // console.log(leftFlow)
         this.flow.initFlow(flowHeights, beforeFlow, leftFlow, processedFlow)
         this.maxScore = this.flow.maxHeight
+        this.maxProcessHeight = d3.max(processedFlow)
     }
 
     updateXScale(range) {

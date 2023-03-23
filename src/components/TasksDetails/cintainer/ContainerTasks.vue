@@ -27,13 +27,15 @@
         </linearGradient>
       </defs>
       <g transform="translate(3,0)">
-        <Task v-if="initDone" v-for="(taskItem, index) in mapTasks" :key="index"
+        <Task v-if="initDone" v-for="(taskItem, index) in mapTasks"
+              :key="index"
               :task="taskItem"
               :xScale="xScale"
               :height="height - 2"
               :dataflow="dataflow"></Task>
 
-        <ReducerTask v-if="initDone" v-for="(taskItem, index) in reducerTasks" :key="'r' + index"
+        <ReducerTask v-if="initDone"
+                     v-for="(taskItem, index) in reducerTasks" :key="'r' + index"
                      :task="taskItem"
                      :xScale="xScale"
                      :height="height - 2"
@@ -49,8 +51,12 @@ import ReducerTask from "@/components/TasksDetails/cintainer/ReducerTask";
 
 import * as d3 from "d3";
 
-const inputColorGen = d3.interpolateRgb('rgba(252,235,211,0.98)', 'rgb(189,0,38)')
+const inputColorGen = d3.interpolateRgb('rgb(226,189,177)', 'rgb(189,0,38)')
+// const inputColorGenTmp = d3.interpolateRgb('rgba(252,235,211,0.3)', 'rgba(189,0,38,0.3)')
+const inputColorGenTmp = d3.interpolateRgb('rgba(226,189,177,0.3)', 'rgba(189,0,38,0.3)')
+
 const processColorGen = d3.interpolateRgb('rgb(158,202,225)', 'rgb(8,81,156)')
+const processColorGenTmp = d3.interpolateRgb('rgba(158,202,225,0.3)', 'rgba(8,81,156, 0.3)')
 
 
 export default {
@@ -86,7 +92,9 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < inputTime.length; ++idx) {
-          colorTicks.push({percent: timePer(inputTime[idx], startTime, endTime), color: inputColorGen(inputVal[idx])})
+          // let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGen(inputVal[idx]) //inputColorGenTmp(inputVal[idx])
+          let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGenTmp(inputVal[idx])
+          colorTicks.push({percent: timePer(inputTime[idx], startTime, endTime), color: color})
         }
         colorMap.set(task.task_id, colorTicks)
       })
@@ -108,9 +116,12 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < processTime.length; ++idx) {
+          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
+          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
+
           colorTicks.push({
             percent: timePer(processTime[idx], startTime, endTime),
-            color: processColorGen(processVal[idx])
+            color: color
           })
         }
         colorMap.set(task.task_id, colorTicks)
@@ -133,9 +144,12 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < processTime.length; ++idx) {
+          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
+          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
+
           colorTicks.push({
             percent: timePer(processTime[idx], startTime, endTime),
-            color: processColorGen(processVal[idx])
+            color: color
           })
         }
         colorMap.set(task.task_id, colorTicks)

@@ -2,7 +2,7 @@
   <div style="width: 100%; height: 100%;">
     <el-col :span="1">
       <svg height="50px" width="100%">
-        <g class="paraAxis" transform="translate(37,-2)">
+        <g class="paraAxis" transform="translate(37,5)">
         </g>
       </svg>
     </el-col>
@@ -58,7 +58,7 @@ export default {
   mounted() {
     let tmpScale = d3.scaleLinear()
         .domain(this.valueScale.range())
-        .range([45, 0])
+        .range([40, 0])
     d3.select(this.$el).select('.paraAxis').call(d3.axisLeft(tmpScale).ticks(3).tickFormat(d => {
       return d
     }).tickSize(2))
@@ -74,11 +74,11 @@ export default {
       })
       let trend = this.getTrend(tasksList)
       this.timeScale = d3.scaleLinear().domain([this.dataflow.startTime, this.dataflow.endTime]).range([0, this.width])
-      this.valueScale = d3.scaleLinear().domain([0, 45]).range([0, d3.max(trend, t => t.count)])
+      this.valueScale = d3.scaleLinear().domain([0, 40]).range([0, d3.max(trend, t => t.count)])
       let _this = this
       let res = []
       trend.forEach(t => {
-        res.push([_this.timeScale(t.time), 45, 45 - _this.valueScale(t.count)])
+        res.push([_this.timeScale(t.time), 45, 40 - _this.valueScale(t.count)])
       })
       return areaGen(res)
     },
@@ -91,7 +91,7 @@ export default {
       let _this = this
       let res = []
       trend.forEach(t => {
-        res.push([_this.timeScale(t.time), 45, 45 - _this.valueScale(t.count)])
+        res.push([_this.timeScale(t.time), 45, 40 - _this.valueScale(t.count)])
       })
       return areaGen(res)
     },

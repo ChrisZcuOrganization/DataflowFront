@@ -25,10 +25,10 @@ const mutations = {
     getTasksFlow(state, {appName: appName}) {
         dataService.getTasksFlow({"app": appName}, resp => {
             initVertexFlow(state, resp, appName)
-            // dataService.getMapTasksDetails({"app": appName}, resp => {
-            //     initTasksDetails(state.flowMap.get(appName), resp)
-            state.tasksFlowInitDone = true
-            // })
+            dataService.getMapTasksDetails({"app": appName}, resp => {
+                initTasksDetails(state.flowMap.get(appName), resp)
+                state.tasksFlowInitDone = true
+            })
         })
 
     },

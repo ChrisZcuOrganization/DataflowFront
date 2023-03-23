@@ -12,7 +12,7 @@
                        :yScale="vertexFlow.yScale"
                        :isOverview="isOverview"></VertexBytesFlow>
     </g>
-<!--    <g>-->
+    <!--    <g>-->
 <!--      <dataflowInfo v-if="allFlowRenderDone" :flow="overviewFlow"-->
 <!--                    :vertexFlow="vertexFlow"-->
 <!--                    :xScale="vertexFlow.xScale"-->
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     handleVertexClick(e) {
-      console.log(this.vertexFlow.vertexName)
+      // console.log(this.vertexFlow.vertexName)
       if (this.dataflow.selectedVertex === this.vertexFlow.vertexName)
         this.dataflow.selectedVertex = ""
       else

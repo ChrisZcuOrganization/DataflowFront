@@ -1,6 +1,7 @@
 <template>
   <g :transform="'translate('+rectOff + ')'">
-    <rect v-if="isShowOprInfo" width="150" :height="boardHeight" rx="10" ry="10" fill="rgb(255,247,236)" opacity="0.8" stroke="rgb(103,169,207)"
+    <rect v-if="isShowOprInfo" width="140" :height="boardHeight" rx="10" ry="10" fill="rgb(255,247,236)" opacity="0.8"
+          stroke="rgb(103,169,207)"
           stroke-width="2"></rect>
     <g :id="canvasId"></g>
   </g>
@@ -13,18 +14,18 @@ const link = d3.linkHorizontal()
 
 export default {
   name: "VertexInfo",
-  props: ["vertex", "xScale", "vexMarginTop", "vexHeight", "vexGlobalOff", "widthBound", "heightBound"],
+  props: ["vertex", "dataflow", "xScale", "vexMarginTop", "vexHeight", "vexGlobalOff", "widthBound", "heightBound"],
   data() {
     return {
-      circleRadius: 15,
-      margin: 10
+      circleRadius: 10,
+      margin: 8
     }
   },
   methods: {
     initOpsTree() {
       let canvas = d3.select("#" + this.canvasId)
       canvas.selectAll('circle').remove()
-      let yOff = 20, xOff = 150 / 2, splitXOff = 150 / 4
+      let yOff = 14, xOff = 150 / 2, splitXOff = 150 / 6
       let circles = [], joinYOff = -1, joinXOff = -1, joinLastXOff = -1, joinLastYOff = -1
       this.vertex.operatorsList.forEach(ops => {
         circles.push({
@@ -67,7 +68,7 @@ export default {
           })
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
-          .attr("font-size", 15)
+          .attr("font-size", 10)
           .text(function (d) {
             return d.ops
           })
@@ -103,8 +104,8 @@ export default {
           .attr('y', yOff)
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
-          .attr("font-size", 20)
-          .text("data")
+          .attr("font-size", 12)
+          .text("store_sales")
       if (joinXOff > 0) {
         canvas.append('path')
             .attr('d', function () {
@@ -121,8 +122,31 @@ export default {
             .attr('y', joinYOff)
             .attr("text-anchor", "middle")
             .attr("dominant-baseline", "middle")
-            .attr("font-size", 20)
-            .text("data")
+            .attr("font-size", 12)
+            .text("Map 6")
+        canvas.append('rect')
+            .attr('x', 5)
+            .attr('y', yOff - 70)
+            .attr('height', 40)
+            .attr('width', 60)
+            .attr('rx', "5")
+            .attr('ry', "5")
+            .attr('fill', 'rgba(29,145,192,0.4)')
+        canvas.append('text')
+            .attr('x', joinXOff - 2)
+            .attr('y', yOff - 60)
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "middle")
+            .attr("font-size", 12)
+            .text("Total time:")
+        canvas.append('text')
+            .attr('x', joinXOff - 2)
+            .attr('y', yOff - 40)
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "middle")
+            .attr("font-size", 12)
+            .text("Total time:")
+            .text((this.vertex.totalEndTime - this.vertex.totalStartTime) / 1000 + "s")
       }
     },
     deleteOpsTree() {
@@ -148,16 +172,17 @@ export default {
         yOff = this.heightBound - this.boardHeight - 30
       if (xOff + 150 > this.widthBound)
         xOff = this.xScale(this.vertex.totalStartTime) - 150 - 5
-      return [xOff, this.vexGlobalOff + yOff]
+      return [xOff + 29, this.vexGlobalOff + yOff]
     },
     isShowOprInfo() {
-      return this.vertex.isShowOprInfo
+      // return this.vertex.isShowOprInfo
+      return this.vertex.vertexName === this.dataflow.selectedVertex
     },
     canvasId() {
       return this.vertex.vertexName.replace("Map ", "M").replace("Reducer ", "R") + 'opsCanvas'
     },
     boardHeight() {
-      return this.vertex.operatorsList.length * (2 * this.circleRadius + this.margin) + 30
+      return this.vertex.operatorsList.length * (2 * 15 + 10) - 35
     }
   }
 }
