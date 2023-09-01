@@ -32,16 +32,20 @@
               :task="taskItem"
               :xScale="xScale"
               :height="height - 2"
-              :dataflow="dataflow"></Task>
+              :dataflow="dataflow"
+              @click.native="handleTaskClick(taskItem, $event)"></Task>
 
         <ReducerTask v-if="initDone"
                      v-for="(taskItem, index) in reducerTasks" :key="'r' + index"
                      :task="taskItem"
                      :xScale="xScale"
                      :height="height - 2"
-                     :dataflow="dataflow"></ReducerTask>
+                     :dataflow="dataflow"
+                     @click.native="handleTaskClick(taskItem, $event)"></ReducerTask>
       </g>
+
     </svg>
+
   </div>
 </template>
 
@@ -50,6 +54,7 @@ import Task from "@/components/TasksDetails/cintainer/Task";
 import ReducerTask from "@/components/TasksDetails/cintainer/ReducerTask";
 
 import * as d3 from "d3";
+import DetailsInfo from "@/components/TasksDetails/cintainer/DetailsInfo";
 
 const inputColorGen = d3.interpolateRgb('rgb(226,189,177)', 'rgb(189,0,38)')
 // const inputColorGenTmp = d3.interpolateRgb('rgba(252,235,211,0.3)', 'rgba(189,0,38,0.3)')
@@ -61,7 +66,7 @@ const processColorGenTmp = d3.interpolateRgb('rgba(158,202,225,0.3)', 'rgba(8,81
 
 export default {
   name: "ContainerTasks",
-  components: {Task, ReducerTask},
+  components: {DetailsInfo, Task, ReducerTask},
   props: ["mapTasks", "dataflow", "height", "reducerTasks"],
   data() {
     return {
@@ -76,6 +81,19 @@ export default {
     this.initDone = true
   },
   methods: {
+    handleTaskClick(task, e) {
+      let totalWidth = window.screen.width
+      let totalHeight = window.screen.height
+      this.dataflow.selectedTask = task
+      this.dataflow.isClickToShowDetails = !this.dataflow.isClickToShowDetails
+      // 250px
+      this.dataflow.clickedPosInfo.left = e.x < totalWidth - 500 ? totalWidth - 400 : totalWidth * 0.4 + 100
+
+      console.log()
+      // console.log(this.dataflow.clickedPosInfo)
+      // console.log(task)
+      console.log(e.x, e.y)
+    },
     generateInputColorMap() {
       let colorMap = new Map()
       const timePer = function (time, startTime, endTime) {
@@ -92,8 +110,8 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < inputTime.length; ++idx) {
-          // let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGen(inputVal[idx]) //inputColorGenTmp(inputVal[idx])
-          let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGenTmp(inputVal[idx])
+          let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGen(inputVal[idx]) //inputColorGenTmp(inputVal[idx])
+          // let color = task.vertex === "Map 1" ? inputColorGen(inputVal[idx]) : inputColorGenTmp(inputVal[idx])
           colorTicks.push({percent: timePer(inputTime[idx], startTime, endTime), color: color})
         }
         colorMap.set(task.task_id, colorTicks)
@@ -116,8 +134,8 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < processTime.length; ++idx) {
-          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
-          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
+          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
+          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
 
           colorTicks.push({
             percent: timePer(processTime[idx], startTime, endTime),
@@ -144,8 +162,8 @@ export default {
         let endTime = task.end_time
 
         for (let idx = 0; idx < processTime.length; ++idx) {
-          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
-          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
+          let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGen(processVal[idx]) //processColorGenTmp(processVal[idx])
+          // let color = task.vertex === "Map 1" ? processColorGen(processVal[idx]) : processColorGenTmp(processVal[idx])
 
           colorTicks.push({
             percent: timePer(processTime[idx], startTime, endTime),

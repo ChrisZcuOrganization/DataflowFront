@@ -52,9 +52,9 @@
       </el-row>
       <div v-if="tasksFlowInitDone">
         <div v-for="dataflow in flows" :key="flows.flowName">
-          <el-col style="height: 100%; width: 40%;">
+          <el-col style="height: 100%; width: calc(40% - 4px);">
             <el-row>
-              <div class="borderedRect" style="width: calc(100% - 8px); margin-top: 6px; margin-left: 7px;">
+              <div class="borderedRect" style="width: 100%; margin-top: 6px; margin-left: 7px;">
                 <div style="height: 280px; margin: 2px;">
                   <TDAG style="margin-top: 5px"
                         :dataflow="dataflow"
@@ -66,7 +66,7 @@
             <el-row>
               <div class="outborderedRect" style="width: 100%; margin-top: 2px; margin-left: 2px;">
                 <div class="borderedRect"
-                     style="width: calc(100% - 8px); margin-top: 2px; margin-left: 2px;margin-right: 2px;">
+                     style="width: calc(100% - 4px); margin-top: 2px; margin-left: 2px;margin-right: 2px;">
                   <!--                  <Dataflow style="width: 100%; height: 180px; margin-top: 2px; margin-left: 2px;"-->
                   <!--                            :dataflow="dataflow"-->
                   <!--                            :isQueryFlow="true"-->
@@ -80,7 +80,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="borderedRect" style="width: calc(100% - 8px); height: 384px; margin: 2px;">
+                <div class="borderedRect" style="width: calc(100% - 4px); height: 384px; margin: 2px;">
                   <Dataflow style="width: 100%; height: 375px; margin-top: 2px; margin-left: 2px;"
                             :dataflow="dataflow"
                             :isQueryFlow="false"
@@ -89,7 +89,7 @@
               </div>
             </el-row>
           </el-col>
-          <el-col style="height: 100%; width: 60%;">
+          <el-col style="height: 100%; width: calc(60% - 4px);">
             <div class="outborderedRect" style="height: 100%; width: calc(100% - 8px); margin: 2px;">
               <div class="borderedRect" style="height: 50px; width: calc(100% - 8px); margin: 2px;">
                 <Parallelism style="margin: 2px" :dataflow="dataflow"></Parallelism>
@@ -136,6 +136,7 @@ export default {
       queryName: "Select Query",
       fold: false,
       queryList: ["Query17@TPC-DS", "Query29@TPC-DS", "Query54@TPC-DS", "Query29_2@TPC-DS", "Query69@TPC-DS", "Query79@TPC-DS", "Query69_2@TPC-DS"],
+      // queryList: ["Query29@TPC-DS"],
       exeTime: "0",
       dataSize: "0",
       containerNum: "0"
@@ -169,7 +170,7 @@ export default {
     // }
     tasksFlowInitDone(newVal){
       if (newVal){
-        this.exeTime = "70"
+        this.exeTime = "45"
         this.containerNum = "60"
         this.dataSize = "100"
       }
@@ -199,7 +200,7 @@ export default {
 .infoSelector {
   /*height: 30px;*/
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   color: #36506a;
 }
 .el-input .el-input__inner {

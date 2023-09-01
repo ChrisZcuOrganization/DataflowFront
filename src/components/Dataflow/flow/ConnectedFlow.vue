@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {areaGen} from "@/utils/util";
+// import {areaGen} from "@/utils/util";
 import * as d3 from "d3"
 
 const link = d3.linkHorizontal()

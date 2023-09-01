@@ -2,7 +2,7 @@
   <g :transform="'translate(' + [startX, 0] + ')'">
     <g>
       <rect :width="endX - startX" :height="height" fill="none"
-            stroke="black" :stroke-width=0></rect>
+            stroke="black" :stroke-width="strokeWidth"></rect>
     </g>
     <g :transform="'translate(' + [0, 2] + ')'">
       <rect :width="endX - startX" :height="height / 2 - 1" :fill="'url(#grad-inputMapSpeed-' + task.task_id + ')'"
@@ -29,8 +29,11 @@ export default {
       return this.xScale(this.task.end_time)
     },
     strokeWidth() {
+      // return this.task.vertex === this.dataflow.selectedTaskId ? (this.task.vertex.indexOf("Reducer") === -1 ? 5: 3) : 0
       return this.task.vertex === this.dataflow.selectedVertex ? (this.task.vertex.indexOf("Reducer") === -1 ? 5: 3) : 0
     },
+  },
+  methods:{
   }
 }
 </script>

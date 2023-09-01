@@ -6,7 +6,8 @@ import VueAxios from 'vue-axios'
 // Vue.use(VueAxios, axios);
 Vue.prototype.axios = axios
 
-const dataServerUrl = "http://10.16.3.177:5000";
+// const dataServerUrl = "http://10.16.3.177:5000";
+const dataServerUrl = "https://acm.sustech.edu.cn/dhive_req";
 
 // function getConfiguration(param, callback){
 // const url = `${dataServerUrl}/get_configuration`;

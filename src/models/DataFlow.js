@@ -11,7 +11,9 @@ export class DataFlow {
     vertexList
 
     selectedVertex = ""
-
+    selectedTask = null
+    isClickToShowDetails = false
+    clickedPosInfo = {top: 140, left: 850}
     containerTasks = new Map
 
     connectedFlows = []//[(srcX,srcY1,srcY2), (dstX,dstY1,dstY2)]

@@ -6,7 +6,10 @@
             :offset="colorTick.percent + '%'" :stop-color="colorTick.color"/>
     </linearGradient>
     <!--    :fill="'url(#grad-shuffle-'+task.taskId+')'"-->
-
+    <g :transform="'translate(' + [startX, 0] + ')'">
+      <rect :width="endX - startX" :height="height" fill="none"
+            stroke="black" :stroke-width="strokeWidth"></rect>
+    </g>
     <g :transform="'translate(' + [startX, 0] + ')'">
       <rect :width="endX - startX" :height="height" :fill="'url(#grad-shuffle-'+task.task_id+')'"
             stroke="black" :stroke-width=0></rect>
